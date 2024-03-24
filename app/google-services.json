@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "850254964181",
+    "project_id": "train-trips-3ca65",
+    "storage_bucket": "train-trips-3ca65.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:850254964181:android:f2f99697c219183cc8495c",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBf2X9Q0f6K4X2rm82zRp5xMqMZ61wXCH4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
