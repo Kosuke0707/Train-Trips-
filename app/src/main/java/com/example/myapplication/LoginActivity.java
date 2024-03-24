@@ -1,4 +1,5 @@
 package com.example.myapplication;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,8 +17,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -37,8 +37,8 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!validateUsername() | !validatePassword()) {
-
+                if (!validateUsername() || !validatePassword()) {
+                    return;
                 } else {
                     checkUser();
                 }
@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public Boolean validateUsername() {
-        String val = loginUsername.getText().toString();
+        String val = loginUsername.getText().toString().trim();
         if (val.isEmpty()) {
             loginUsername.setError("Email cannot be empty");
             return false;
@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public Boolean validatePassword() {
-        String val = loginPassword.getText().toString();
+        String val = loginPassword.getText().toString().trim();
         if (val.isEmpty()) {
             loginPassword.setError("Password cannot be empty");
             return false;
@@ -93,7 +93,6 @@ public class LoginActivity extends AppCompatActivity {
 
                     loginUsername.setError(null);
 
-                    // Iterate through the children of the snapshot to find the matching user
                     for (DataSnapshot childSnapshot : snapshot.getChildren()) {
                         String passwordFromDB = childSnapshot.child("password").getValue(String.class);
 
@@ -110,11 +109,10 @@ public class LoginActivity extends AppCompatActivity {
                             intent.putExtra("password", passwordFromDB);
 
                             startActivity(intent);
-                            return; // Exit the method after finding the matching user
+                            return;
                         }
                     }
 
-                    // If no matching user is found with the provided password
                     loginPassword.setError("Invalid Credentials");
                     loginPassword.requestFocus();
                 } else {
@@ -126,6 +124,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // Handle onCancelled event
+                Toast.makeText(LoginActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
