@@ -11,23 +11,24 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
 
     EditText loginUsername, loginPassword;
     Button loginButton;
     TextView signupRedirectText;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        mAuth = FirebaseAuth.getInstance();
 
         loginUsername = findViewById(R.id.email_address);
         loginPassword = findViewById(R.id.password);
@@ -40,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (!validateUsername() || !validatePassword()) {
                     return;
                 } else {
-                    checkUser();
+                    loginUser();
                 }
             }
         });
@@ -77,55 +78,25 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    public void loginUser() {
+        String email = loginUsername.getText().toString().trim();
+        String password = loginPassword.getText().toString().trim();
 
-    public void checkUser() {
-        String userUsername = loginUsername.getText().toString().trim();
-        String userPassword = loginPassword.getText().toString().trim();
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-        Query checkUserDatabase = reference.orderByChild("email").equalTo(userUsername);
-
-        checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                if (snapshot.exists()) {
-
-                    loginUsername.setError(null);
-
-                    for (DataSnapshot childSnapshot : snapshot.getChildren()) {
-                        String passwordFromDB = childSnapshot.child("password").getValue(String.class);
-
-                        if (passwordFromDB.equals(userPassword)) {
-                            loginUsername.setError(null);
-
-                            String nameFromDB = childSnapshot.child("name").getValue(String.class);
-                            String emailFromDB = childSnapshot.child("email").getValue(String.class);
-
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-
-                            intent.putExtra("name", nameFromDB);
-                            intent.putExtra("email", emailFromDB);
-                            intent.putExtra("password", passwordFromDB);
-
                             startActivity(intent);
-                            return;
+                            finish();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(LoginActivity.this, "Authentication failed. Invalid email or password.", Toast.LENGTH_SHORT).show();
                         }
                     }
-
-                    loginPassword.setError("Invalid Credentials");
-                    loginPassword.requestFocus();
-                } else {
-                    loginUsername.setError("User does not exist");
-                    loginUsername.requestFocus();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Handle onCancelled event
-                Toast.makeText(LoginActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                });
     }
 }

@@ -4,55 +4,87 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".EditProfileActivity">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit Profile"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"/>
+
+    <EditText
+        android:id="@+id/nameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:layout_below="@id/titleTextView"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:hint="Name"
+        android:inputType="textPersonName" />
 
-        <EditText
-            android:id="@+id/editName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Name"
-            android:drawableStart="@drawable/ic_person"
-            android:drawablePadding="10dp"
-            android:inputType="text"
-            android:padding="10dp" />
+    <EditText
+        android:id="@+id/emailEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nameEditText"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:hint="Email"
+        android:inputType="textEmailAddress" />
 
-        <EditText
-            android:id="@+id/editEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Email"
-            android:drawableStart="@drawable/ic_email"
-            android:drawablePadding="10dp"
-            android:inputType="textEmailAddress"
-            android:padding="10dp"
-            android:layout_marginTop="10dp" />
+    <EditText
+        android:id="@+id/phoneEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/emailEditText"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:hint="Phone"
+        android:inputType="phone" />
 
-        <EditText
-            android:id="@+id/editPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Password"
-            android:drawableStart="@drawable/ic_password"
-            android:drawablePadding="10dp"
-            android:inputType="textPassword"
-            android:padding="10dp"
-            android:layout_marginTop="10dp" />
+    <RadioGroup
+        android:id="@+id/genderRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/phoneEditText"
+        android:orientation="horizontal"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp">
 
-        <Button
-            android:id="@+id/saveButton"
-            android:layout_width="match_parent"
+        <RadioButton
+            android:id="@+id/Male"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save"
-            android:layout_marginTop="20dp"
-            android:background="@color/purple_500"
-            android:textColor="@android:color/white"
-            android:padding="10dp" />
-    </LinearLayout>
+            android:text="Male" />
+
+        <RadioButton
+            android:id="@+id/Female"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Female" />
+
+        <RadioButton
+            android:id="@+id/Others"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Others" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/genderRadioGroup"
+        android:layout_centerHorizontal="true"
+        android:text="Save"
+        android:layout_marginTop="20dp"/>
+
 </RelativeLayout>

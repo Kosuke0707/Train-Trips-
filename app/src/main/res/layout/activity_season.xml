@@ -1,9 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/ic_bg"
     tools:context=".Season">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.7"
+        android:orientation="vertical"
+        android:background="@color/purple_500" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:fillViewport="true"
+        android:layout_alignParentBottom="true">
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true"
+            app:cardCornerRadius="28dp"
+            android:layout_marginBottom="-50dp"
+            android:id="@+id/card_view">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="28dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Season Pass"
+                    android:textColor="@color/purple_700"
+                    android:textSize="32sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.7"
+                    android:text="Please fill your information" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.7"
+                    android:text="Name"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_person"
+                    android:inputType="textPersonName" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="19dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.7"
+                    android:text="Email Address"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/email_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_email"
+                    android:inputType="textEmailAddress" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="19dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.7"
+                    android:text="Aadhar Card Number "
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/idproof"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_idproof"
+                    android:inputType="number" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="19dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.7"
+                    android:text="Phone Number"
+                    android:textStyle="bold" />
+                <EditText
+                    android:id="@+id/Phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_phone"
+                    android:ems="10"
+                    android:inputType="phone" />
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="10dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.7"
+                    android:text="Gender"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/genderRadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/Male"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:text="Male" />
+
+                        <RadioButton
+                            android:id="@+id/Female"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:text="Female" />
+
+                        <RadioButton
+                            android:id="@+id/Others"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:text="Others" />
+                    </LinearLayout>
+                </RadioGroup>
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="10dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.7"
+                    android:text="Date of Birth"
+                    android:textStyle="bold" />
+                <EditText
+                    android:id="@+id/DoB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_calendar" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="5dp" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/Btn_season_pass"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:text="Season Pass"
+                    app:cornerRadius="32dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </ScrollView>
+</RelativeLayout>

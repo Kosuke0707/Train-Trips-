@@ -1,7 +1,5 @@
 package com.example.myapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,32 +11,40 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.button.MaterialButton;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class SignupActivity extends AppCompatActivity {
 
     EditText signupName, signupEmail, signupPassword, confirm, phone;
-    TextView loginRedirectText;
     Button signupButton;
     RadioGroup genderRadioGroup;
     RadioButton maleRadioButton, femaleRadioButton, othersRadioButton;
     CheckBox termsCheckBox;
-    FirebaseDatabase database;
-    DatabaseReference reference;
+    FirebaseAuth mAuth;
+    DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
         signupName = findViewById(R.id.username);
         signupEmail = findViewById(R.id.email_address);
         signupPassword = findViewById(R.id.password);
         confirm = findViewById(R.id.confirm);
         phone = findViewById(R.id.Phone);
-        loginRedirectText = findViewById(R.id.LoginRedirectText);
         signupButton = findViewById(R.id.Btn_Register);
         genderRadioGroup = findViewById(R.id.genderRadioGroup);
         maleRadioButton = findViewById(R.id.Male);
@@ -49,55 +55,52 @@ public class SignupActivity extends AppCompatActivity {
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!validateFields()) {
-                    return;
-                }
-
-                database = FirebaseDatabase.getInstance();
-                reference = database.getReference("users");
-
-                String name = signupName.getText().toString();
-                String email = signupEmail.getText().toString();
-                String password = signupPassword.getText().toString();
-                String confirmPassword = confirm.getText().toString();
-                String phoneNumber = phone.getText().toString();
-                String gender = getSelectedGender();
-
-                if (!password.equals(confirmPassword)) {
-                    Toast.makeText(SignupActivity.this, "Passwords do not match!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (!termsCheckBox.isChecked()) {
-                    Toast.makeText(SignupActivity.this, "Please accept terms and conditions!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                DatabaseHelper databasehelper = new DatabaseHelper(name, email, password, phoneNumber, gender);
-                reference.child(name).setValue(databasehelper);
-
-                Toast.makeText(SignupActivity.this, "You have signed up successfully!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        loginRedirectText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-                startActivity(intent);
+                createUser();
             }
         });
     }
 
-    private boolean validateFields() {
-        if (signupName.getText().toString().isEmpty() ||
-                signupEmail.getText().toString().isEmpty() ||
-                signupPassword.getText().toString().isEmpty() ||
-                confirm.getText().toString().isEmpty() ||
-                phone.getText().toString().isEmpty()) {
+    private void createUser() {
+        final String name = signupName.getText().toString().trim();
+        final String email = signupEmail.getText().toString().trim();
+        final String password = signupPassword.getText().toString().trim();
+        final String confirmPassword = confirm.getText().toString().trim();
+        final String phoneNumber = phone.getText().toString().trim();
+        final String gender = getSelectedGender();
+
+        if (!validateFields(name, email, password, confirmPassword, phoneNumber)) {
+            return;
+        }
+
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            saveUserData(user.getUid(), name, email, phoneNumber, gender);
+                            Toast.makeText(SignupActivity.this, "You have signed up successfully!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(SignupActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    private boolean validateFields(String name, String email, String password, String confirmPassword, String phoneNumber) {
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || phoneNumber.isEmpty()) {
             Toast.makeText(this, "Please fill in all fields!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!password.equals(confirmPassword)) {
+            Toast.makeText(this, "Passwords do not match!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!termsCheckBox.isChecked()) {
+            Toast.makeText(this, "Please accept terms and conditions!", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -114,5 +117,10 @@ public class SignupActivity extends AppCompatActivity {
         } else {
             return "";
         }
+    }
+
+    private void saveUserData(String userId, String name, String email, String phoneNumber, String gender) {
+        User user = new User( name, email, phoneNumber, gender);
+        mDatabase.child("users").child(userId).setValue(user);
     }
 }
