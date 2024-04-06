@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -16,25 +17,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CardView historyCard;
     private CardView profileCard;
     private CardView seasonCard;
-    private CardView expressCard;
+    private CardView stationsCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         mapCard = findViewById(R.id.mapCard);
         bookCard = findViewById(R.id.bookCard);
         historyCard = findViewById(R.id.historyCard);
         profileCard = findViewById(R.id.profileCard);
         seasonCard = findViewById(R.id.seasonCard);
-        expressCard = findViewById(R.id.expressCard);
+        stationsCard = findViewById(R.id.stationsCard);
 
         mapCard.setOnClickListener(this);
         bookCard.setOnClickListener(this);
         historyCard.setOnClickListener(this);
         profileCard.setOnClickListener(this);
         seasonCard.setOnClickListener(this);
-        expressCard.setOnClickListener(this);
+        stationsCard.setOnClickListener(this);
     }
 
     @Override
@@ -78,9 +80,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (viewId == R.id.profileCard) {
             startActivity(new Intent(MainActivity.this, Profiles.class));
             Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show();
-        } else if (viewId == R.id.expressCard) {
-            startActivity(new Intent(MainActivity.this, Express.class));
-            Toast.makeText(this, "Express Booking", Toast.LENGTH_SHORT).show();
+        } else if (viewId == R.id.stationsCard) {
+            startActivity(new Intent(MainActivity.this, Stations.class));
+            Toast.makeText(this, "Stations", Toast.LENGTH_SHORT).show();
         }
     }
 }

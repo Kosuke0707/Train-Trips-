@@ -182,7 +182,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/expressCard"
+            android:id="@+id/stationsCard"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_row="1"
@@ -201,7 +201,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Routes"
+                    android:text="Stations"
                     android:textAlignment="center"
                     android:textColor="@color/purple_700"
                     android:textStyle="bold" />

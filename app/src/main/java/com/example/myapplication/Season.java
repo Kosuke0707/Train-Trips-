@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -36,8 +37,8 @@ public class Season extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
-
+        setContentView(R.layout.activity_season);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         nameEditText = findViewById(R.id.name);
         emailEditText = findViewById(R.id.email_address);
         idProofEditText = findViewById(R.id.idproof);

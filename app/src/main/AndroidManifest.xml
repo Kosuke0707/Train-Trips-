@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
-            android:name=".EditProfileActivity"
+            android:name=".Stations"
             android:exported="false" />
         <activity
-            android:name=".Express"
+            android:name=".EditProfileActivity"
             android:exported="false" />
         <activity
             android:name=".Profiles"

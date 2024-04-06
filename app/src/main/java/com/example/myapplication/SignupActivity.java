@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,7 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class SignupActivity extends AppCompatActivity {
-
+    TextView loginRedirectText;
     EditText signupName, signupEmail, signupPassword, confirm, phone;
     Button signupButton;
     RadioGroup genderRadioGroup;
@@ -36,10 +37,10 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
+        loginRedirectText = findViewById(R.id.LoginRedirectText);
         signupName = findViewById(R.id.username);
         signupEmail = findViewById(R.id.email_address);
         signupPassword = findViewById(R.id.password);
@@ -58,7 +59,17 @@ public class SignupActivity extends AppCompatActivity {
                 createUser();
             }
         });
+
+        loginRedirectText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View view){
+                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
+
 
     private void createUser() {
         final String name = signupName.getText().toString().trim();
