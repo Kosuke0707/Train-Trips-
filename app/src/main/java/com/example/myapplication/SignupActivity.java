@@ -23,15 +23,21 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Calendar;
+import android.app.DatePickerDialog;
+import android.widget.DatePicker;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 public class SignupActivity extends AppCompatActivity {
     TextView loginRedirectText;
-    EditText signupName, signupEmail, signupPassword, confirm, phone;
+    EditText signupName, signupEmail, signupPassword, confirm, phone,dobEditText;
     Button signupButton;
     RadioGroup genderRadioGroup;
     RadioButton maleRadioButton, femaleRadioButton, othersRadioButton;
     CheckBox termsCheckBox;
     FirebaseAuth mAuth;
     DatabaseReference mDatabase;
+    Calendar dobCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +53,7 @@ public class SignupActivity extends AppCompatActivity {
         confirm = findViewById(R.id.confirm);
         phone = findViewById(R.id.Phone);
         signupButton = findViewById(R.id.Btn_Register);
+        dobEditText = findViewById(R.id.udob);
         genderRadioGroup = findViewById(R.id.genderRadioGroup);
         maleRadioButton = findViewById(R.id.Male);
         femaleRadioButton = findViewById(R.id.Female);
@@ -67,6 +74,17 @@ public class SignupActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        dobCalendar = Calendar.getInstance();
+        updateDobLabel();
+
+        dobEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(SignupActivity.this, dobDatePickerListener, dobCalendar.get(Calendar.YEAR),
+                        dobCalendar.get(Calendar.MONTH), dobCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
     }
 
 
@@ -78,6 +96,7 @@ public class SignupActivity extends AppCompatActivity {
         final String confirmPassword = confirm.getText().toString().trim();
         final String phoneNumber = phone.getText().toString().trim();
         final String gender = getSelectedGender();
+        final String dob = dobEditText.getText().toString().trim();
 
         if (!validateFields(name, email, password, confirmPassword, phoneNumber)) {
             return;
@@ -89,13 +108,13 @@ public class SignupActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-                            saveUserData(user.getUid(), name, email, phoneNumber, gender);
+                            saveUserData(user.getUid(), name, email, phoneNumber, gender, dob);
                             Toast.makeText(SignupActivity.this, "You have signed up successfully!", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
                             startActivity(intent);
                         } else {
-                            Toast.makeText(SignupActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(SignupActivity.this, "Authentication failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -130,8 +149,27 @@ public class SignupActivity extends AppCompatActivity {
         }
     }
 
-    private void saveUserData(String userId, String name, String email, String phoneNumber, String gender) {
-        User user = new User( name, email, phoneNumber, gender);
+    private void saveUserData(String userId, String name, String email, String phoneNumber, String gender, String dob) {
+        User user = new User( name, email, phoneNumber, gender, dob);
         mDatabase.child("users").child(userId).setValue(user);
     }
+    private void updateDobLabel() {
+        if (dobEditText != null) {
+            String myFormat = "dd/MM/yyyy";
+            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+            dobEditText.setText(sdf.format(dobCalendar.getTime()));
+        }
+    }
+
+
+    private DatePickerDialog.OnDateSetListener dobDatePickerListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            dobCalendar.set(Calendar.YEAR, year);
+            dobCalendar.set(Calendar.MONTH, month);
+            dobCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateDobLabel();
+        }
+    };
 }
+

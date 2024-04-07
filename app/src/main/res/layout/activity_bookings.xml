@@ -1,9 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Bookings">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_bandra"
+    android:alpha="0.5"/>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_margin="20dp"
+        app:cardCornerRadius="8dp"
+        app:cardBackgroundColor="@color/white">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/purple_500">
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Ticket Booking"
+                android:textColor="@color/white"
+                android:textSize="28sp"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal|center_vertical"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:layout_marginTop="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Source"
+                android:alpha="0.9"
+                android:textStyle="bold"/>
+            <Spinner
+                android:id="@+id/spinnerSource"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:prompt="@string/source_prompt"
+                android:layout_marginBottom="16dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Destination"
+                android:alpha="0.9"
+                android:textStyle="bold"/>
+            <Spinner
+                android:id="@+id/spinnerDestination"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:prompt="@string/destination_prompt"
+                android:layout_marginBottom="16dp"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <TextView
+                android:id="@+id/jtype"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Journey Type"
+                android:alpha="0.9"
+                android:textStyle="bold"/>
+            <Spinner
+                android:layout_below="@id/jtype"
+                android:id="@+id/spinnerjtype"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="8dp"/>
+            <TextView
+                android:id="@+id/jclass"
+                android:layout_marginLeft="190dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Train Class"
+                android:alpha="0.9"
+                android:textStyle="bold"/>
+            <Spinner
+                android:layout_below="@id/jclass"
+                android:id="@+id/spinnerclass"
+                android:layout_alignParentRight="true"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="8dp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <TextView
+                android:id="@+id/passengers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Passengers"
+                android:alpha="0.9"
+                android:textStyle="bold"/>
+            <Spinner
+                android:layout_below="@id/passengers"
+                android:id="@+id/spinnerpassengers"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:id="@+id/payment"
+                    android:layout_marginLeft="190dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Payment Method"
+                    android:alpha="0.9"
+                    android:textStyle="bold"/>
+                <Spinner
+                    android:layout_below="@id/payment"
+                    android:id="@+id/spinnerpayment"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
+                    android:layout_marginBottom="8dp" />
+            </RelativeLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/Btn_book"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:text="Book Ticket"
+                app:cornerRadius="32dp"/>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

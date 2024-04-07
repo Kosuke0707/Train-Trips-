@@ -1,23 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/ic_bg"
     tools:context=".SignupActivity">
+
+    <!-- Background Overlay -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.7"
         android:orientation="vertical"
+        android:alpha="0.7"
         android:background="@color/purple_500" />
 
+    <!-- Logo and Title -->
     <LinearLayout
+        android:id="@id/linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/scroll"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="10dp">
@@ -36,28 +38,30 @@
             android:textSize="32sp"
             android:textStyle="bold" />
     </LinearLayout>
+
+    <!-- Scrollable Content -->
     <ScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:fillViewport="true"
-        android:layout_alignParentBottom="true">
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_alignParentBottom="true"
-            app:cardCornerRadius="28dp"
-            android:layout_marginBottom="-300dp"
-            android:id="@+id/card_view">
+        android:layout_height="match_parent"
+        android:layout_below="@id/linear"
+        android:fillViewport="true">
 
+        <!-- Card View Container -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="28dp">
+
+            <!-- Card Content -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="28dp">
 
+                <!-- Your content here -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -83,6 +87,7 @@
                     android:alpha="0.7"
                     android:text="Username"
                     android:textStyle="bold" />
+
                 <EditText
                     android:id="@+id/username"
                     android:layout_width="match_parent"
@@ -97,6 +102,7 @@
                     android:alpha="0.7"
                     android:text="Email Address"
                     android:textStyle="bold" />
+
                 <EditText
                     android:id="@+id/email_address"
                     android:layout_width="match_parent"
@@ -111,6 +117,7 @@
                     android:alpha="0.7"
                     android:text="Password"
                     android:textStyle="bold" />
+
                 <EditText
                     android:id="@+id/password"
                     android:layout_width="match_parent"
@@ -125,6 +132,7 @@
                     android:alpha="0.7"
                     android:text="Confirm Password"
                     android:textStyle="bold" />
+
                 <EditText
                     android:id="@+id/confirm"
                     android:layout_width="match_parent"
@@ -139,12 +147,14 @@
                     android:alpha="0.7"
                     android:text="Phone Number"
                     android:textStyle="bold" />
+
                 <EditText
                     android:id="@+id/Phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableEnd="@drawable/ic_phone"
                     android:ems="10"
+                    android:maxLength="10"
                     android:inputType="phone" />
 
                 <!-- Date of Birth -->
@@ -154,8 +164,10 @@
                     android:alpha="0.7"
                     android:text="Date of Birth"
                     android:textStyle="bold" />
+
                 <EditText
                     android:id="@+id/udob"
+                    android:maxLength="10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableEnd="@drawable/ic_calendar" />
@@ -206,6 +218,7 @@
                         android:layout_centerVertical="true"
                         android:alpha="0.7"
                         android:text="I have read " />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -222,14 +235,14 @@
                     android:text="Register"
                     app:cornerRadius="32dp" />
 
-                <!-- Login Redirect Text -->
                 <TextView
                     android:id="@+id/LoginRedirectText"
-                    android:layout_width="345dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Already an User? Login"
-                    android:textColor="@color/purple_700" />
+                    android:textColor="@color/purple_700"
+                    android:background="@color/white"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </ScrollView>

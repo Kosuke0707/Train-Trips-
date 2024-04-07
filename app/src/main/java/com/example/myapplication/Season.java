@@ -82,7 +82,7 @@ public class Season extends AppCompatActivity {
                     String name = snapshot.child("name").getValue(String.class);
                     String email = snapshot.child("email").getValue(String.class);
                     String idProof = snapshot.child("idProof").getValue(String.class);
-                    String phone = snapshot.child("phone").getValue(String.class);
+                    String phone = snapshot.child("phoneNumber").getValue(String.class);
                     String dob = snapshot.child("dob").getValue(String.class);
                     String gender = snapshot.child("gender").getValue(String.class);
 
@@ -135,7 +135,7 @@ public class Season extends AppCompatActivity {
         databaseReference.child("name").setValue(name);
         databaseReference.child("email").setValue(email);
         databaseReference.child("idProof").setValue(idProof);
-        databaseReference.child("phone").setValue(phone);
+        databaseReference.child("phoneNumber").setValue(phone);
         databaseReference.child("dob").setValue(dob);
         databaseReference.child("gender").setValue(gender);
 

@@ -4,16 +4,17 @@ public class User {
     private String email;
     private String phoneNumber;
     private String gender;
-
+    private String dob;
     // Empty constructor (required by Firebase)
     public User() {
     }
 
-    public User(String name, String email, String phoneNumber, String gender) {
+    public User(String name, String email, String phoneNumber, String gender, String dob) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.gender = gender;
+        this.dob= dob;
     }
 
     // Getters and setters
@@ -49,5 +50,13 @@ public class User {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getdob() {
+        return dob;
+    }
+
+    public void setdob(String dob) {
+        this.dob = dob;
     }
 }

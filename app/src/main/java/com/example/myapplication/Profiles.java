@@ -21,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class Profiles extends AppCompatActivity {
 
-    TextView nameTextView, emailTextView, phoneTextView, genderTextView;
+    TextView nameTextView, emailTextView, phoneTextView, genderTextView, dobTextView;
     Button Btn_edit;
 
     @Override
@@ -34,6 +34,7 @@ public class Profiles extends AppCompatActivity {
         emailTextView = findViewById(R.id.emailTextView);
         phoneTextView = findViewById(R.id.phoneTextView);
         genderTextView = findViewById(R.id.genderTextView);
+        dobTextView = findViewById(R.id.DoBTextView);
         Btn_edit = findViewById(R.id.Btn_edit);
 
         Btn_edit.setOnClickListener(new View.OnClickListener() {
@@ -56,12 +57,13 @@ public class Profiles extends AppCompatActivity {
                         String email = snapshot.child("email").getValue(String.class);
                         String phone = snapshot.child("phoneNumber").getValue(String.class);
                         String gender = snapshot.child("gender").getValue(String.class);
-
+                        String dob = snapshot.child("dob").getValue(String.class);
                         // Set retrieved data to TextViews
                         nameTextView.setText(name);
                         emailTextView.setText(email);
                         phoneTextView.setText(phone);
                         genderTextView.setText(gender);
+                        dobTextView.setText(dob);
                     } else {
                         // If user data doesn't exist in database
                         Toast.makeText(Profiles.this, "User data not found.", Toast.LENGTH_SHORT).show();
