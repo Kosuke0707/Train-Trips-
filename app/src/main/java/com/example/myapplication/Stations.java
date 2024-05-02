@@ -1,9 +1,14 @@
 package com.example.myapplication;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -55,7 +60,10 @@ public class Stations extends AppCompatActivity {
         allButton.setOnClickListener(v -> loadAllStations());
         centralButton.setOnClickListener(v -> loadStationsByLine("Central"));
         westernButton.setOnClickListener(v -> loadStationsByLine("Western"));
-
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            String selectedStation = stationList.get(position);
+            showPopupMenu(view, selectedStation);
+        });
         // Set search functionality
         setSearchFunctionality();
     }
@@ -144,4 +152,52 @@ public class Stations extends AppCompatActivity {
             }
         });
     }
+    private void showPopupMenu(View view, String selectedStation) {
+        PopupMenu popupMenu = new PopupMenu(this, view);
+        popupMenu.inflate(R.menu.station_menu); // Inflate the menu layout
+        popupMenu.setOnMenuItemClickListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.menu_stationmap) {
+                openStationMap(selectedStation);
+                return true;
+            } else if (itemId == R.id.menu_searchtrains) {
+                // Handle "Search Trains from Schedule" option
+                searchTrains(selectedStation);
+                return true;
+            } else {
+                return false;
+            }
+        });
+        popupMenu.show();
+    }
+    private void searchTrains(String selectedStation) {
+        Intent intent = new Intent(Stations.this, TrainScheduleEntry.class);
+        intent.putExtra("selectedStation", selectedStation);
+        startActivity(intent);
+    }
+    private void openStationMap(String selectedStation) {
+        // Retrieve the station map URL from Firebase Realtime Database
+        DatabaseReference stationRef = FirebaseDatabase.getInstance().getReference().child("stations").child(selectedStation).child("mapUrl");
+        stationRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String mapUrl = dataSnapshot.getValue(String.class);
+                if (mapUrl != null && !mapUrl.isEmpty()) {
+                    // Open the station map URL in a web browser or an image viewer
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mapUrl));
+                    startActivity(intent);
+                } else {
+                    // Handle case where map URL is not available
+                    Toast.makeText(Stations.this, "Station map URL not available", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle database error
+                Toast.makeText(Stations.this, "Failed to retrieve station map URL: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }

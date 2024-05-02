@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".PaymentActivity">
+        <TextView
+            android:id="@+id/txtWalletBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wallet Balance: ₹0.00"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"/>
+
+        <EditText
+            android:id="@+id/edtAddCredits"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="Enter amount to add"
+            android:inputType="numberDecimal"
+            android:layout_below="@id/txtWalletBalance"
+            android:layout_marginBottom="16dp"/>
+
+        <Button
+            android:id="@+id/btnAddCredits"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Add Credits"
+            android:layout_below="@id/edtAddCredits"
+            app:cornerRadius="32dp"
+            android:layout_marginBottom="16dp"/>
+        <TextView
+            android:id="@+id/txtFare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Journey Fare :"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"
+            android:layout_below="@id/btnAddCredits"/>
+        <Button
+            android:id="@+id/btnPayWithWallet"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Pay with Wallet"
+            app:cornerRadius="32dp"
+            android:layout_marginBottom="16dp"
+            android:layout_below="@id/txtFare"/>
+</RelativeLayout>

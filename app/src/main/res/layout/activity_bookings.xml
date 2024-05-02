@@ -83,7 +83,7 @@
                 android:layout_marginBottom="8dp"/>
             <TextView
                 android:id="@+id/jclass"
-                android:layout_marginLeft="190dp"
+                android:layout_marginLeft="180dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Train Class"
@@ -93,7 +93,7 @@
                 android:layout_below="@id/jclass"
                 android:id="@+id/spinnerclass"
                 android:layout_alignParentRight="true"
-                android:layout_width="150dp"
+                android:layout_width="160dp"
                 android:layout_height="40dp"
                 android:layout_marginBottom="8dp" />
             </RelativeLayout>
@@ -117,7 +117,7 @@
 
                 <TextView
                     android:id="@+id/payment"
-                    android:layout_marginLeft="190dp"
+                    android:layout_marginLeft="180dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Payment Method"
@@ -127,7 +127,7 @@
                     android:layout_below="@id/payment"
                     android:id="@+id/spinnerpayment"
                     android:layout_alignParentRight="true"
-                    android:layout_width="150dp"
+                    android:layout_width="160dp"
                     android:layout_height="40dp"
                     android:layout_marginBottom="8dp" />
             </RelativeLayout>
