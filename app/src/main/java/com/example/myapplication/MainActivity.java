@@ -11,6 +11,12 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.constants.ScaleTypes;
+import com.denzcoskun.imageslider.models.SlideModel;
+
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private CardView mapCard;
     private CardView bookCard;
@@ -18,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CardView profileCard;
     private CardView seasonCard;
     private CardView stationsCard;
+    private ImageSlider imageSlider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         profileCard = findViewById(R.id.profileCard);
         seasonCard = findViewById(R.id.seasonCard);
         stationsCard = findViewById(R.id.stationsCard);
+        imageSlider = findViewById(R.id.imageSlider);
 
         mapCard.setOnClickListener(this);
         bookCard.setOnClickListener(this);
@@ -37,6 +45,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         profileCard.setOnClickListener(this);
         seasonCard.setOnClickListener(this);
         stationsCard.setOnClickListener(this);
+
+        ArrayList<SlideModel> slideModels = new ArrayList<>();
+        slideModels.add(new SlideModel("https://th.bing.com/th/id/OIP.g37B-TGtA3nPIH1198IfBwHaEO?w=294&h=180&c=7&r=0&o=5&pid=1.7", ScaleTypes.FIT));
+        slideModels.add(new SlideModel("https://th.bing.com/th/id/OIP.9OMF35EQSvstBx7nQKm5hgHaE7?rs=1&pid=ImgDetMain", ScaleTypes.FIT));
+        slideModels.add(new SlideModel("https://th.bing.com/th/id/OIP.ghKfmh4lxdvoXnia0fMkBQHaEo?w=249&h=180&c=7&r=0&o=5&pid=1.7", ScaleTypes.FIT));
+        slideModels.add(new SlideModel("https://th.bing.com/th/id/OIP.MbHkqfu4VUpzxoIIhlct4wHaEo?w=270&h=180&c=7&r=0&o=5&pid=1.7", ScaleTypes.FIT));
+
+        imageSlider.setImageList(slideModels,ScaleTypes.FIT);
     }
 
     @Override

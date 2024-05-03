@@ -46,7 +46,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-database-ktx")
     implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
-    implementation("dev.shreyaspatil.EasyUpiPayment:EasyUpiPayment:3.0.3")
-    implementation("com.opencsv:opencsv:5.5.1")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("com.github.denzcoskun:ImageSlideshow:0.1.0")
 
 }

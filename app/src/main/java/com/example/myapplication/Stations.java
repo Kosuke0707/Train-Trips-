@@ -1,6 +1,4 @@
 package com.example.myapplication;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -9,17 +7,15 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-
+import androidx.fragment.app.FragmentTransaction;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,7 +94,6 @@ public class Stations extends AppCompatActivity {
                 }
                 adapter.notifyDataSetChanged();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Handle error
@@ -171,27 +166,27 @@ public class Stations extends AppCompatActivity {
         popupMenu.show();
     }
     private void searchTrains(String selectedStation) {
-        Intent intent = new Intent(Stations.this, TrainScheduleEntry.class);
-        intent.putExtra("selectedStation", selectedStation);
-        startActivity(intent);
-    }
+            Toast.makeText(this, "Error searching for trains" , Toast.LENGTH_SHORT).show();
+        }
     private void openStationMap(String selectedStation) {
         // Retrieve the station map URL from Firebase Realtime Database
         DatabaseReference stationRef = FirebaseDatabase.getInstance().getReference().child("stations").child(selectedStation).child("mapUrl");
         stationRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String mapUrl = dataSnapshot.getValue(String.class);
-                if (mapUrl != null && !mapUrl.isEmpty()) {
-                    // Open the station map URL in a web browser or an image viewer
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mapUrl));
-                    startActivity(intent);
+                String gsUrl = dataSnapshot.getValue(String.class);
+                if (gsUrl != null && !gsUrl.isEmpty()) {
+                    ImageDisplayFragment fragment = new ImageDisplayFragment();
+                    fragment.setImageUrl(gsUrl);
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragment_container, fragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                 } else {
                     // Handle case where map URL is not available
                     Toast.makeText(Stations.this, "Station map URL not available", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Handle database error
