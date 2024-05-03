@@ -23,4 +23,8 @@
         <item>Second Class(II)</item>
         <item>First Class(I)</item>
     </string-array>
+
+    <string name="about">This Project is created by Shubham Juvatkar
+        <br></br>D.G.Ruparel College <br></br>Seat No.1067347
+    </string>
 </resources>
